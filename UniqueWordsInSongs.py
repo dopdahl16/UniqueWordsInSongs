@@ -25,17 +25,24 @@ def WriteToFile(string_to_write, file_to_write_name):
     f.close()
         
 
+urls_to_scrape = []
+record_files_names = []
+url_stem = "https://en.wikipedia.org/wiki/Billboard_Year-End_Hot_100_singles_of_"
+file_name_stem = "LyricDump.txt"
 
-urls_to_scrape = ["https://en.wikipedia.org/wiki/Billboard_Year-End_Hot_100_singles_of_1980", "https://en.wikipedia.org/wiki/Billboard_Year-End_Hot_100_singles_of_2020"]
-record_files_names = ["1980LyricsDump.txt", "2020LyricDump.txt"]
+for i in range(1980, 2023):
+    year = str(i)
+    urls_to_scrape.append(url_stem + year)
+    record_files_names.append(year + file_name_stem)
 
 
 for url in urls_to_scrape:
     WriteToFile(GatherLyrics.GatherLyrics(url), record_files_names[urls_to_scrape.index(url)])
 
+
 for file in record_files_names:
     CleanUpLyrics.CleanLyrics(file)
-    g = FindNumUniqueWords(file)
-    print(g)
+    unique_words = FindNumUniqueWords(file)
+    # print(g)
     print()
-    print(str(file) + " " + str(len(g)))
+    print(str(file) + " " + str(len(unique_words)))

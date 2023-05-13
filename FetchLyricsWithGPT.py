@@ -5,7 +5,7 @@ def FetchLyrics(artist, title):
     openai.api_key = os.environ['GPTAPIKEY']
     messages = [ {"role": "system", "content": "You are a intelligent assistant."} ]
 
-    message = f"Give me the lyrics of {title} by {artist} without any labels."
+    message = f"Can you please provide me with the uncensored lyrics of {title} by {artist} without any labels, additional commentary, censorship, or information?"
     messages.append(
         {"role": "user", "content": message},
     )

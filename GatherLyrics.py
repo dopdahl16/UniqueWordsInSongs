@@ -35,7 +35,6 @@ def GatherLyrics(url):
             newLyrics = FetchLyricsWithAZLyricsAPI.FetchLyrics(artist, title)
 
             if newLyrics in lyricDump:
-                fetch_lyrics_attempts_record[current_idx] += 1
                 raise Exception("API could not locate lyrics")
             print(f"{title} by {artist} added")
             print(f"{newLyrics}")
@@ -48,6 +47,8 @@ def GatherLyrics(url):
             if fetch_lyrics_attempts_record[current_idx] >= 1:
                 try:
                     newLyrics = FetchLyricsWithGPT.FetchLyrics(artist, title)
+                    if not "\n" in newLyrics:
+                        raise Exception("ChatGPT did not provide lyrics")
                     print(f"{title} by {artist} added")
                     print(f"{newLyrics}")
                     lyricDump += '\n' + newLyrics
