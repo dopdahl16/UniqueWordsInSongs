@@ -3,14 +3,15 @@
 """
 Created on Sat May 6 2023
 
-@author: danielopdhal
+@author: danielopdahl
 """
 
 
 import CleanUpLyrics
 import GatherLyrics
+import matplotlib.pyplot as plt
 
-def FindNumUniqueWords(file):
+def FindUniqueWords(file):
     unique_words = set()
     f = open(file, "r")
     for i in f:
@@ -36,13 +37,22 @@ for i in range(1980, 2023):
     record_files_names.append(year + file_name_stem)
 
 
-for url in urls_to_scrape:
-    WriteToFile(GatherLyrics.GatherLyrics(url), record_files_names[urls_to_scrape.index(url)])
+# for url in urls_to_scrape:
+#     WriteToFile(GatherLyrics.GatherLyrics(url), record_files_names[urls_to_scrape.index(url)])
 
+unique_words_by_year_data = dict()
 
-for file in record_files_names:
-    CleanUpLyrics.CleanLyrics(file)
-    unique_words = FindNumUniqueWords(file)
-    # print(g)
+for file_name in record_files_names:
+    CleanUpLyrics.CleanLyrics(file_name)
+    unique_words_set = FindUniqueWords(file_name)
+    unique_words_count = len(unique_words_set)
+    unique_words_by_year_data[file_name[:4]] = unique_words_count
     print()
-    print(str(file) + " " + str(len(unique_words)))
+    print(str(file_name) + " " + str(unique_words_count))
+
+names = list(unique_words_by_year_data.keys())
+values = list(unique_words_by_year_data.values())
+
+plt.bar(names, values)
+plt.show(block=False)
+print()
