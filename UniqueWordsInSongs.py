@@ -55,4 +55,6 @@ values = list(unique_words_by_year_data.values())
 
 plt.bar(names, values)
 plt.show(block=False)
+plt.xticks(rotation=90)
+plt.savefig(fname="unique_words_by_year_data_vis.png")
 print()
